@@ -2,6 +2,6 @@
   "name": "pingu",
   "version": "1.0.0",
   "dependencies": {
-    "discord.js": "^14.0.1"
+    "discord.js": "14.0.1"
   }
 }
