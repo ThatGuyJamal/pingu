@@ -1,7 +1,11 @@
 {
   "name": "pingu",
   "version": "1.0.0",
+  "main": "index.js",
   "dependencies": {
     "discord.js": "^14.0.1"
+  },
+  "scripts": {
+    "start": "node index.js"
   }
 }
