@@ -10,7 +10,9 @@ A simple discord bot useful for farming pings.
 {
 	"token": "",
 	"role": "",
-	"channels": []
+	"channels": [],
+	"interval": 1000,
+	"ratelimit": 10000
 }
 ```
 

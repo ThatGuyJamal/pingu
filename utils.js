@@ -1,11 +1,15 @@
 const config = require("./config.json");
-const { Client } = require("discord.js");
+const { Client, Collection } = require("discord.js");
+
+const ratelimit = new Collection();
 
 /**
  * Validates the config file and throws an error if it is invalid.
  */
 function validateConfig() {
 	if (!config.token) throw new Error("No token provided to login to Discord");
+	if (!typeof config.interval === "number")
+		throw new Error("config Interval is not a number");
 	if (!config.role)
 		throw new Error("No role provided to ping in config.js file");
 	if (!config.channels || config.channels.length < 1)
@@ -32,18 +36,49 @@ function formatRoleId(id) {
  */
 function funcPingLoop(data) {
 	setInterval(() => {
+		if (ratelimitManager(Date.now()) === false) return;
+
 		for (const channel of config.channels) {
 			const chan = data.channels.cache.get(channel);
-            const role = formatRoleId(config.role);
+			const role = formatRoleId(config.role);
 			if (chan) {
 				chan.send(role);
 			}
 		}
-	}, 1000);
+	}, config.interval);
+}
+
+/**
+ * Controls when the bot should pause from pinging channels.
+ * @param {number} time current time in milliseconds
+ * @returns {Boolean} true if the bot should ping, false if it should pause.
+ */
+function ratelimitManager(time) {
+	let limit_count = ratelimit.get(time)
+
+	if (!limit_count) {
+		limit_count = 0;
+		ratelimit.set(time, limit_count);
+		return true;
+	}
+
+	// console.debug(`[1] ${limit_count}/${config.ratelimit}/${time}`);
+
+	if (limit_count >= config.ratelimit) {
+		// console.debug(`[2] ${limit_count}/${config.ratelimit}/${time}`);
+		setTimeout(() => {
+			ratelimit.delete(time);
+		}, 5000);
+		return false;
+	}
+
+	ratelimit.set(time, limit_count + 1);
+	return true
 }
 
 module.exports = {
 	validateConfig,
 	formatRoleId,
 	funcPingLoop,
+	ratelimitManager,
 };
