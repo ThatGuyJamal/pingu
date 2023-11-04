@@ -15,9 +15,9 @@ function validateConfig() {
 	if (!config.channels || config.channels.length < 1)
 		throw new Error("No channels provided to ping in config.js file");
 
-	if (config.role.length > 18)
+	if (config.role.length > 19)
 		throw new Error(
-			"Role ID should be 18 characters. Make sure the ID was copied correctly."
+			"Role ID should be 19 characters. Make sure the ID was copied correctly."
 		);
 }
 
