@@ -1,5 +1,5 @@
-const config = require("./config.json");
-const { Client, Collection } = require("discord.js");
+const config = require('./config.json');
+const { Client, Collection } = require('discord.js');
 
 const ratelimit = new Collection();
 
@@ -7,17 +7,16 @@ const ratelimit = new Collection();
  * Validates the config file and throws an error if it is invalid.
  */
 function validateConfig() {
-	if (!config.token) throw new Error("No token provided to login to Discord");
-	if (!typeof config.interval === "number")
-		throw new Error("config Interval is not a number");
+	if (!config.token) throw new Error('No token provided to login to Discord');
+	if (!typeof config.interval === 'number')
+		throw new Error('config Interval is not a number');
 	if (!config.role)
-		throw new Error("No role provided to ping in config.js file");
+		throw new Error('No role provided to ping in config.js file');
 	if (!config.channels || config.channels.length < 1)
-		throw new Error("No channels provided to ping in config.js file");
-
+		throw new Error('No channels provided to ping in config.js file');
 	if (config.role.length > 19)
 		throw new Error(
-			"Role ID should be 19 characters. Make sure the ID was copied correctly."
+			'Role ID should be 19 characters. Make sure the ID was copied correctly.'
 		);
 }
 
@@ -54,7 +53,7 @@ function funcPingLoop(data) {
  * @returns {Boolean} true if the bot should ping, false if it should pause.
  */
 function ratelimitManager(time) {
-	let limit_count = ratelimit.get(time)
+	let limit_count = ratelimit.get(time);
 
 	if (!limit_count) {
 		limit_count = 0;
@@ -73,7 +72,7 @@ function ratelimitManager(time) {
 	}
 
 	ratelimit.set(time, limit_count + 1);
-	return true
+	return true;
 }
 
 module.exports = {
