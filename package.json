@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^14.0.1"
+    "@keyv/sqlite": "^3.6.6",
+    "@thatguyjamal/lib-js": "^1.0.4",
+    "discord.js": "^14.0.1",
+    "keyv": "^4.5.4"
   },
   "scripts": {
     "start": "node index.js"

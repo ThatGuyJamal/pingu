@@ -16,4 +16,4 @@ A simple discord bot useful for farming pings.
 }
 ```
 
-Then just run `npm install` and `npm start`.
+Then just run `pnpm install` and `pnpm start`.

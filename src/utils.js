@@ -1,12 +1,13 @@
-const config = require('./config.json');
-const { Client, Collection } = require('discord.js');
+import { Collection } from 'discord.js';
 
 const ratelimit = new Collection();
 
 /**
  * Validates the config file and throws an error if it is invalid.
+ * @param {Object} config from the config.json file
+ * @returns {void}
  */
-function validateConfig() {
+export function validateConfig(config) {
 	if (!config.token) throw new Error('No token provided to login to Discord');
 	if (!typeof config.interval === 'number')
 		throw new Error('config Interval is not a number');
@@ -21,19 +22,11 @@ function validateConfig() {
 }
 
 /**
- * Formats the role ID to be used in a ping.
- * @param {id} id to reformat
- * @returns
- */
-function formatRoleId(id) {
-	return `<@&${id}>`;
-}
-
-/**
  * Runs the spam logic for the bot.
  * @param {Client<true>} data from the discord client object
+ * @returns {void}
  */
-function funcPingLoop(data) {
+export function funcPingLoop(data) {
 	setInterval(() => {
 		if (ratelimitManager(Date.now()) === false) return;
 
@@ -61,10 +54,7 @@ function ratelimitManager(time) {
 		return true;
 	}
 
-	// console.debug(`[1] ${limit_count}/${config.ratelimit}/${time}`);
-
 	if (limit_count >= config.ratelimit) {
-		// console.debug(`[2] ${limit_count}/${config.ratelimit}/${time}`);
 		setTimeout(() => {
 			ratelimit.delete(time);
 		}, 5000);
@@ -75,9 +65,11 @@ function ratelimitManager(time) {
 	return true;
 }
 
-module.exports = {
-	validateConfig,
-	formatRoleId,
-	funcPingLoop,
-	ratelimitManager,
-};
+/**
+ * Formats the role ID to be used in a ping.
+ * @param {id} id to reformat
+ * @returns {string} formatted role ID
+ */
+function formatRoleId(id) {
+	return `<@&${id}>`;
+}
