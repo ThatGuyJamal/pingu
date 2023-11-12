@@ -26,7 +26,8 @@ export function validateConfig(config) {
  * @param {Client<true>} data from the discord client object
  * @returns {void}
  */
-export function funcPingLoop(data) {
+export function funcPingLoop(data, config) { 
+	let i = 0;
 	setInterval(() => {
 		if (ratelimitManager(Date.now()) === false) return;
 
@@ -35,9 +36,13 @@ export function funcPingLoop(data) {
 			const role = formatRoleId(config.role);
 			if (chan) {
 				chan.send(role);
+				i++;
 			}
+			console.log(`Pinged ${i} times.`);
 		}
 	}, config.interval);
+
+	console.log(`Bot started. Pinging every ${config.interval}ms.`);
 }
 
 /**
@@ -57,6 +62,7 @@ function ratelimitManager(time) {
 	if (limit_count >= config.ratelimit) {
 		setTimeout(() => {
 			ratelimit.delete(time);
+			console.log('Ratelimit cleared.');
 		}, 5000);
 		return false;
 	}

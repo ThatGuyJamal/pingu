@@ -1,4 +1,6 @@
-# Pingu
+# Pingu v2
+
+WIP: Working on adding sqlite database to store user information and help make spam more annoying such as replying to the user with a random message or copying another users message back to them...
 
 A simple discord bot useful for farming pings.
 

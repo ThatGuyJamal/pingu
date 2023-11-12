@@ -1,7 +1,8 @@
 {
   "name": "pingu",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./src/main.js",
+  "type": "module",
   "dependencies": {
     "@keyv/sqlite": "^3.6.6",
     "@thatguyjamal/lib-js": "^1.0.4",
@@ -9,6 +10,6 @@
     "keyv": "^4.5.4"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./src/main.js"
   }
 }
